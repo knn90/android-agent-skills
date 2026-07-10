@@ -1,0 +1,77 @@
+# Provenance + curation for the android-solid-expert skill.
+# Maintained by android-skill-consolidate — do not hand-edit pinned_commit / last_synced.
+
+skill: android-solid-expert
+domain: SOLID principles + clean-architecture decoupling (Android / Kotlin)
+last_consolidated:   # not yet consolidated
+
+discovery:
+  enabled: true
+  queries:
+    - "SOLID principles Kotlin agent skill"
+    - "Android clean architecture dependency inversion"
+    - "Android decoupling decorator composite adapter"
+    - "composition over inheritance Kotlin interfaces"
+  authority_anchors:
+    - "Robert C. Martin — SOLID / Clean Architecture (canonical, general SW engineering)"
+    - "Android Developers — Guide to app architecture (UI / domain / data layers, repositories, UDF)"
+    - "Kotlin docs — interfaces, delegation, sealed interfaces (kotlinlang.org)"
+    - "the consuming project's architecture + rules_file"
+
+sources:
+  # ── PRIMARY / SOURCE OF TRUTH ──
+  - name: SOLID (Robert C. Martin) + Android Guide to app architecture
+    url: https://en.wikipedia.org/wiki/SOLID
+    also:
+      - https://developer.android.com/topic/architecture              # Guide to app architecture
+      - https://developer.android.com/topic/architecture/domain-layer # domain layer / use-cases
+      - https://kotlinlang.org/docs/interfaces.html                   # Kotlin interfaces + default methods
+      - https://kotlinlang.org/docs/sealed-classes.html               # sealed interfaces / closed hierarchies
+      - "Robert C. Martin — Clean Architecture: A Craftsman's Guide (2017); SRP/OCP/LSP/ISP/DIP"
+    path: .
+    status: active
+    primary: true
+    consulted_version: "SOLID (Martin); Android app-architecture guide; Kotlin 2.x"
+    last_synced:
+    license: "Canonical SW-engineering principles (public knowledge) + Google/Android + Kotlin references; re-express in original words"
+    note: >
+      SOLID is general software engineering; Google's Guide to app architecture is the Android-idiomatic
+      frame (layers, repositories, unidirectional data flow) that the principles translate onto via small
+      Kotlin interfaces + composition. The principles are public knowledge (not proprietary); write
+      original guidance. PATTERN selection (MVVM/MVI/Clean-MultiModule/MVVM+UseCase) is owned by the
+      architecture lens, not this skill.
+
+  # ── Worked-example discovery seed (MIT — fetch + pin on first consolidation) ──
+  - name: essentialdevelopercom/essential-feed-case-study   # Caio Zullo & Mike Apostolakis (Essential Developer)
+    url: https://github.com/essentialdevelopercom/essential-feed-case-study
+    path: .
+    status: seed
+    pinned_commit:
+    last_synced:
+    license: MIT
+    note: >
+      Best permissively-licensed worked example of dependency inversion, composition root, and the
+      Decorator/Composite/Adapter/Facade decoupling patterns (the "Feed" case study). Swift-authored, but
+      the decoupling patterns are language-agnostic and map directly onto Kotlin interfaces + DI modules.
+      NOTE: Essential Developer's flagship "iOS Lead Essentials" COURSE is paid/copyrighted — use only this
+      MIT repo + their public articles (cite/link), never course content.
+
+  # ── Android-idiomatic reference seed (Apache-2.0 — fetch + pin on first consolidation) ──
+  - name: android/nowinandroid
+    url: https://github.com/android/nowinandroid
+    path: .
+    status: seed
+    pinned_commit:
+    last_synced:
+    license: Apache-2.0
+    note: >
+      Google's flagship modern-Android sample — canonical example of the layered architecture, repository
+      interfaces in the data layer, Hilt composition root/modules, and framework isolation (DTO/Entity →
+      domain mapping) that this skill flags for. Use as the Android-idiomatic reference for DIP + framework
+      isolation examples.
+
+# ── Evaluated, NOT added ──
+# - ramziddin/solid-skills — NO LICENSE (all rights reserved): may read/learn the (public) SOLID
+#   principles, but MUST NOT copy wording/structure. Not vendorable.
+# - Community "clean architecture Android" template repos — many are unlicensed or stale; prefer the
+#   official architecture guide + nowinandroid as the Android-idiomatic anchors.

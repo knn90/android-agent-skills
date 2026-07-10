@@ -1,0 +1,14 @@
+{
+  "name": "android-agent-skills",
+  "owner": {
+    "name": "knn90",
+    "url": "https://github.com/knn90"
+  },
+  "plugins": [
+    {
+      "name": "android-skills",
+      "source": "./",
+      "description": "Android engineering workflow + specialist reviewers (scout · plan · execute · code-review · resolve, plus Compose / Coroutines / Testing / SOLID experts)."
+    }
+  ]
+}

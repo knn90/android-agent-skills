@@ -1,0 +1,129 @@
+# Provenance + curation for the android-testing-expert skill.
+# Maintained by android-skill-consolidate — do not hand-edit pinned_commit / last_synced.
+
+skill: android-testing-expert
+domain: Android testing (JUnit4/JUnit5, unit vs instrumented, coroutines-test, MockK, Compose/Espresso, screenshot)
+last_consolidated:   # not yet consolidated
+
+discovery:
+  enabled: true
+  queries:
+    - "Android testing best practices"
+    - "kotlinx-coroutines-test runTest StandardTestDispatcher"
+    - "MockK coEvery coVerify best practices"
+    - "Turbine Flow testing"
+    - "Compose UI testing createComposeRule onNodeWithTag"
+    - "Robolectric unit test Android framework JVM"
+    - "Hilt testing @HiltAndroidTest @BindValue"
+    - "Espresso IdlingResource flaky tests"
+    - "Paparazzi Roborazzi screenshot testing"
+    - "JUnit4 to JUnit5 Android migration"
+  authority_anchors:
+    - "Android Developers — Test apps on Android (developer.android.com/training/testing)"
+    - "Android Developers — Test Kotlin coroutines (kotlinx-coroutines-test)"
+    - "Android Developers — Testing your Compose layout"
+    - "Android Developers — Espresso / UI Automator guides"
+    - "Kotlin Coroutines guide (kotlinlang.org) — testing"
+    - "MockK documentation (mockk.io)"
+    - "Truth documentation (truth.dev)"
+
+sources:
+  # ── PRIMARY / SOURCE OF TRUTH: official Android + Kotlin + library docs ──
+  - name: Android Developers — official testing documentation
+    url: https://developer.android.com/training/testing
+    also:
+      - https://developer.android.com/kotlin/coroutines/test
+      - https://developer.android.com/develop/ui/compose/testing
+      - https://developer.android.com/training/testing/espresso
+      - https://developer.android.com/training/testing/other-components/ui-automator
+      - https://developer.android.com/training/testing/instrumented-tests/androidx-test-libraries/rules
+      - https://developer.android.com/training/dependency-injection/hilt-testing
+    path: .
+    status: active
+    primary: true              # ranked first; the authoritative source of truth
+    license: "Google / Android Open Source — reference / learn-from only; never vendor verbatim"
+    note: >
+      Official Android testing guides are the source of truth for the unit-vs-instrumented split,
+      Robolectric usage, coroutine test APIs, Compose testing, Espresso/UI Automator, and Hilt test.
+      Semantics here win on any conflict with community idioms.
+
+  - name: Kotlin Coroutines — testing guide (kotlinlang.org / kotlinx.coroutines)
+    url: https://kotlinlang.org/docs/coroutines-guide.html
+    also:
+      - https://github.com/Kotlin/kotlinx.coroutines/tree/master/kotlinx-coroutines-test
+    path: .
+    status: active
+    primary: true
+    license: "Apache-2.0 — reference"
+    note: "Authoritative for runTest / TestDispatcher / virtual-time / MainDispatcher swapping semantics."
+
+  - name: MockK documentation
+    url: https://mockk.io/
+    path: .
+    status: active
+    primary: true
+    license: "Apache-2.0 — reference"
+    note: "Authoritative for mockk / every / coEvery / verify / coVerify / relaxed / slot semantics."
+
+  - name: Truth (Google) documentation
+    url: https://truth.dev/
+    path: .
+    status: active
+    primary: true
+    license: "Apache-2.0 — reference"
+    note: "Authoritative for assertThat subject API and failure-message behavior."
+
+  # ── Community / library sources — DISCOVERY SEEDS (not yet fetched or pinned) ──
+  # android-skill-consolidate will fetch + pin these on first real consolidation.
+  - name: android/nowinandroid — testing patterns (fakes, MainDispatcherRule, Hilt test, Roborazzi)
+    url: https://github.com/android/nowinandroid
+    path: seed
+    status: seed
+    last_synced:               # not yet fetched
+    license: Apache-2.0
+    note: "Google reference sample; canonical for test fakes, TestDispatcher rules, and screenshot setup. Seed only — verify + pin on consolidation."
+
+  - name: android/architecture-samples — testable architecture / fakes
+    url: https://github.com/android/architecture-samples
+    path: seed
+    status: seed
+    last_synced:
+    license: Apache-2.0
+    note: "Seed only — verify + pin on consolidation."
+
+  - name: cashapp/turbine — Flow testing library docs
+    url: https://github.com/cashapp/turbine
+    path: seed
+    status: seed
+    last_synced:
+    license: Apache-2.0
+    note: "Authoritative for Turbine awaitItem/awaitComplete API. Seed — verify + pin on consolidation."
+
+  - name: cashapp/paparazzi — JVM screenshot testing
+    url: https://github.com/cashapp/paparazzi
+    path: seed
+    status: seed
+    last_synced:
+    license: Apache-2.0
+    note: "Seed — verify + pin on consolidation."
+
+  - name: takahirom/roborazzi — Robolectric screenshot testing
+    url: https://github.com/takahirom/roborazzi
+    path: seed
+    status: seed
+    last_synced:
+    license: Apache-2.0
+    note: "Seed — verify + pin on consolidation."
+
+  - name: robolectric/robolectric — JVM Android framework docs
+    url: http://robolectric.org/
+    path: seed
+    status: seed
+    last_synced:
+    license: MIT
+    note: "Seed — verify + pin on consolidation."
+
+# ── Notes ──
+# Primary docs (Android Developers, Kotlin coroutines, MockK, Truth) are the source of truth for
+# semantics. Community entries are DISCOVERY SEEDS only — no commits pinned, nothing fetched yet;
+# android-skill-consolidate resolves and pins them on first real consolidation.

@@ -1,0 +1,64 @@
+# Provenance + curation for the android-code-review skill.
+# Maintained by android-skill-consolidate — do not hand-edit pinned_commit / last_synced.
+# NOTE: android-code-review is a CORE skill (lives in android-skills/, not android-specialists/) but is
+# consolidatable — it carries this SOURCES.yaml so the consolidator can refresh its methodology.
+
+skill: android-code-review
+domain: Android code review (methodology + Kotlin / Compose / architecture / testing review)
+last_consolidated:   # not yet consolidated
+
+discovery:
+  enabled: true
+  queries:
+    - "Kotlin code review agent skill"
+    - "Android code review checklist"
+    - "Android architecture review"
+    - "multi-agent code review swarm"
+  authority_anchors:
+    - "Kotlin coding conventions (kotlinlang.org)"
+    - "Android Developers — Guide to app architecture (developer.android.com)"
+    - "Android Developers documentation (Kotlin / Jetpack Compose / Android Studio)"
+    - "android/nowinandroid — official architecture sample"
+    - "the consuming project's rules_file (per .claude/android-profile.md)"
+
+sources:
+  # ── PRIMARY / SOURCE OF TRUTH ──
+  - name: Kotlin coding conventions + Android app-architecture guide + the project's rules_file
+    url: https://kotlinlang.org/docs/coding-conventions.html
+    also:
+      - https://developer.android.com/topic/architecture
+      - https://developer.android.com/kotlin
+    path: .
+    status: active
+    primary: true
+    consulted_version: "Kotlin 2.x / AndroidX"
+    last_synced:   # source of truth — read live, not pinned
+    license: "Google / JetBrains — reference; the project's rules_file is the per-project authority"
+    note: >
+      Review standards come from the Kotlin coding conventions + Android's Guide to app architecture
+      + the consuming project's rules_file. Domain depth is DELEGATED to the installed specialist
+      skills (android-compose-expert, android-coroutines-expert, android-testing-expert, …) — they are
+      the source of truth for their domains and are triggered per change-type during review
+      (Stage 2.0). Don't duplicate them here.
+
+  # ── Community method sources (discovery SEEDS — not yet fetched or pinned) ──
+  # android-skill-consolidate will run the discovery queries above, fetch the best matches on the
+  # first real consolidation, then record pinned_commit + last_synced. Do NOT treat the entries
+  # below as fetched provenance.
+  - name: android/nowinandroid   # canonical Android architecture / layering / testing reference
+    url: https://github.com/android/nowinandroid
+    path: .
+    status: seed
+    pinned_commit:   # to be pinned on first consolidation
+    last_synced:
+    license: Apache-2.0
+
+  - name: "discovery seed — Kotlin/Android code-review skills"   # scope banner, agent-loop feedback, severity SLAs, spec table, review-swarm synthesis
+    query: "Kotlin code review agent skill · Android review checklist · multi-agent review swarm"
+    status: seed
+    pinned_commit:
+    last_synced:
+    note: >
+      Candidate community method sources (parallel multi-lens review, reuse/simplify lens,
+      architecture-aware layering review) to be located + vetted + pinned by
+      android-skill-consolidate. Left as a seed to avoid fabricating provenance.

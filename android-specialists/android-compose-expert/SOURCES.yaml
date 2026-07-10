@@ -1,0 +1,70 @@
+# Provenance + curation for the android-compose-expert skill.
+# Maintained by android-skill-consolidate — do not hand-edit pinned_commit / last_synced.
+
+skill: android-compose-expert
+domain: Jetpack Compose
+last_consolidated:              # not yet consolidated
+
+discovery:
+  enabled: true
+  queries:                     # seeds for the discovery step (current year appended at run time)
+    - "Jetpack Compose agent skill"
+    - "Jetpack Compose best practices"
+    - "awesome Jetpack Compose"
+    - "Compose performance recomposition stability"
+    - "Compose architecture guidelines"
+  authority_anchors:           # always weighted top for currency
+    - "Android Developers — Jetpack Compose documentation"
+    - "Android Developers — Compose performance & state guidance"
+    - "Material 3 (Material Design) guidelines"
+    - "Guide to app architecture (developer.android.com)"
+    - "android/nowinandroid — official sample app"
+
+sources:
+  # ── PRIMARY / SOURCE OF TRUTH: Google / Android Developers is the top authority; wins on any conflict ──
+  - name: Google — official Jetpack Compose guidance (Android Developers docs)
+    url: https://developer.android.com/develop/ui/compose/documentation
+    also:
+      - https://developer.android.com/develop/ui/compose/performance   # recomposition, stability, deferred reads
+      - https://developer.android.com/develop/ui/compose/state         # state, hoisting, remember/rememberSaveable
+      - https://developer.android.com/develop/ui/compose/navigation    # Navigation-Compose
+      - https://m3.material.io                                          # Material 3 / Material You guidelines
+    path: .
+    status: active
+    primary: true              # ranked first; the authoritative source of truth
+    consulted_version:         # record Compose BOM / min_sdk consulted (not a git SHA)
+    last_synced:               # NOT yet fetched — android-skill-consolidate will fetch + pin on first run
+    license: "Google / Android Developers — reference / learn-from only; never vendor verbatim"
+    note: >
+      Primary authority for every rule in this skill: Compose docs, the Compose performance/state
+      guidance, Navigation-Compose, and the Material 3 guidelines, gated to the profile's min_sdk.
+      android-skill-consolidate should fetch and record the consulted Compose BOM version on first
+      real consolidation.
+
+  - name: android/nowinandroid — official Android sample (architecture + Compose reference)
+    url: https://github.com/android/nowinandroid
+    path: .
+    status: seed               # discovery seed — not yet fetched/pinned
+    pinned_commit:             # android-skill-consolidate will pin on first consolidation
+    last_synced:
+    license: Apache-2.0
+    note: >
+      Google's canonical modern-Android sample — reference for state hoisting, UDF, Material 3
+      theming, and module structure. Seed only; consolidation fetches + pins.
+
+  # ── Community sources — DISCOVERY SEEDS ONLY (not yet fetched; no fabricated provenance) ──
+  # android-skill-consolidate will locate, verify, fetch, and pin these on first real consolidation.
+  - name: (seed) Compose best-practices / agent-skill repos
+    status: seed
+    pinned_commit:
+    last_synced:
+    note: >
+      Candidate community sources to discover and vet on consolidation, e.g. curated
+      "awesome-jetpack-compose" lists and Compose-focused agent skills. Treat as discovery
+      seeds — verify each claim against the primary Android docs before folding in, and
+      confirm license permits rebranding before vendoring any wording.
+
+# ── Not yet consolidated ──
+# No community source has been fetched or pinned. authority_anchors above are the source of truth
+# until android-skill-consolidate runs its first discovery + verification pass and records
+# pinned_commit / last_synced for each community seed it accepts.

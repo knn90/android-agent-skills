@@ -1,0 +1,43 @@
+# Provenance + freshness tracking for the android-plan skill.
+# Maintained by android-skill-consolidate — do not hand-edit pinned_commit / last_synced.
+# NOTE: android-plan is a WORKFLOW skill (bespoke orchestration, NOT synthesized domain knowledge).
+# It is AUDIT-ONLY: the consolidator runs source staleness + discovery (Step 1) and surfaces
+# new/dead planning sources as a PR, but NEVER auto-merges content into SKILL.md. A human adapts
+# the ideas by hand (selectively), the way the current methodology was adopted.
+
+skill: android-plan
+domain: implementation planning & task breakdown (methodology for Android feature / refactor / ticket plans)
+mode: audit-only          # discovery + staleness only; synthesis (Steps 3–4) is SKIPPED
+last_consolidated:        # not yet consolidated
+
+discovery:
+  enabled: true
+  queries:
+    - "implementation planning agent skill"
+    - "task breakdown agent skill"
+    - "vertical slicing feature planning"
+    - "dependency graph build order planning"
+  authority_anchors:
+    - "Android Developers — Guide to app architecture (developer.android.com)"
+    - "Android Developers — app modularization / project structure guidance"
+    - "the consuming project's rules_file (per .claude/android-profile.md)"
+
+sources:
+  - name: addyosmani/agent-skills — planning-and-task-breakdown
+    url: https://github.com/addyosmani/agent-skills
+    path: skills/planning-and-task-breakdown/
+    status: seed              # discovery seed — android-skill-consolidate fetches + pins on first real consolidation
+    pinned_commit:            # not yet fetched — do not fabricate
+    last_synced:              # not yet fetched
+    license: MIT              # believed MIT — verify on first sync
+    cite_only: true           # methodology reference — ideas adapted by hand, never vendored
+    note: >
+      Source of the dependency-graph build order, vertical slicing, per-task sizing (L→split),
+      checkpoint cadence, and per-task acceptance criteria adopted (selectively) into android-plan.
+      Also candidate for adoption: size-by-file-count scale, the "and"-in-title split test, and
+      contract-first parallelization for team runs. The per-task Files-touched / Estimated-scope
+      fields were deliberately NOT adopted — they duplicate plan.md's File Changes table and the
+      per-step size. Using the skill directly (vendoring/installing) is not planned: trigger overlap
+      with android-plan + a template that phases by maturity (Foundation/Core/Polish, contradicting
+      its own vertical-slice rule) + tasks/-dir output would break the plans_dir + ExitPlanMode
+      contracts. Future changes here are adapted by a human, not auto-merged.
