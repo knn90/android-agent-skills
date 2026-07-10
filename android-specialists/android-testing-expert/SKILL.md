@@ -1,6 +1,6 @@
 ---
 name: android-testing-expert
-description: "Expert Android testing guidance across the whole stack — JUnit4 vs JUnit5, unit (JVM) vs instrumented tests, Robolectric, test doubles/DI (MockK, Hilt), coroutine/Flow async testing, Compose UI + Espresso, parallelization & flakiness. Fires when work touches tests (@Test, @RunWith, MockK mockk/every/coEvery/verify, Turbine test/awaitItem, runTest, TestDispatcher, MainDispatcherRule, Truth assertThat, Espresso onView, createComposeRule/onNodeWithTag, Robolectric, @HiltAndroidTest, src/androidTest)."
+description: "Expert Android testing guidance — JUnit4/JUnit5, unit (JVM) vs instrumented, Robolectric, doubles/DI (MockK, Hilt), coroutine/Flow async testing, Compose UI + Espresso, flakiness. Fires when work touches tests (@Test, MockK, Turbine, runTest, createComposeRule/onNodeWithTag, Espresso, src/androidTest)."
 ---
 
 # Android Testing Expert (JUnit + coroutines-test + MockK + Compose/Espresso)

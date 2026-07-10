@@ -28,8 +28,7 @@ Read `.claude/android-profile.md`: `architecture`, `state_type`, `di`, `navigati
 `networking`, `localization`, `test_tags`, `feature_flags`, `verify_command`,
 `high_rigor_domains`, `plans_dir`, `source_roots`, `generated_paths`, `rules_file`,
 ticket fields. If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing →
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing →
 run `android-project-init`.
 
 Plans touching `high_rigor_domains` must address security, rollback safety, feature-flag

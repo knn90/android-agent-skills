@@ -17,8 +17,7 @@ of real, high-confidence findings beats a wall of nits.
 Read `.claude/android-profile.md`: `architecture`, `state_type`, `di`, `navigation`, `networking`,
 `localization`, `test_tags`, `crash_reporting`, `verify_command`, `high_rigor_domains`,
 `generated_paths`, **`specialists`**, `rules_file`, `test_roots`, `plans_dir`. If missing, read the main
-checkout's copy — `$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing → run `android-project-init`.
+checkout's copy — `$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing → run `android-project-init`.
 
 ---
 
@@ -60,8 +59,9 @@ Flag **scope creep** (unrelated refactors bundled in) and **missing work** (`TOD
 ## Stage 2 — Multi-lens review (run the lenses in parallel)
 
 ### 2.0 — Specialist routing (FIRST — this is the point)
-For each domain the diff touches, route it to the matching specialist below **if that specialist skill
-is installed** in this project — **on by default, no profile entry needed**. Spawn a **read-only
+**This table is the canonical signal→specialist map for the suite** (`android-execute` Phase 3 mirrors
+it — update both together). For each domain the diff touches, route it to the matching specialist below
+**if that specialist skill is installed** in this project — **on by default, no profile entry needed**. Spawn a **read-only
 `general-purpose` Agent** that loads the specialist's `SKILL.md` and reviews **only its slice** of the
 diff; the general lens (2.1) then skips that domain. The profile's `specialists:` is an **optional
 override**: if set, restrict routing to that list; `specialists: none` turns routing off.

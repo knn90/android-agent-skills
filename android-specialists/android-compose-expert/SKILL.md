@@ -1,6 +1,6 @@
 ---
 name: android-compose-expert
-description: "Expert Jetpack Compose guidance — composition & reuse, state (remember / rememberSaveable / mutableStateOf / StateFlow), layout, recomposition performance, navigation, animation, accessibility, Material 3. Fires when work touches Compose (@Composable, remember, Modifier, mutableStateOf, recomposition, LazyColumn, etc.)."
+description: "Expert Jetpack Compose guidance — state, recomposition/performance, layout, navigation, animation, accessibility, Material 3. Fires when work touches Compose (@Composable, remember/mutableStateOf, Modifier, LazyColumn, recomposition)."
 ---
 
 # Compose Expert

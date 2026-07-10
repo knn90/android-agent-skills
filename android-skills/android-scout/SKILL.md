@@ -13,8 +13,7 @@ full files into main context. Output is a **map**, not analysis.
 
 Read `.claude/android-profile.md` for `source_roots`, `test_roots`, `generated_paths`,
 `ui_framework`, `navigation`, `networking`. If absent, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still absent → tell the
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still absent → tell the
 user to run `android-project-init` first (greenfield repos have nothing to scout).
 
 ## When to Use

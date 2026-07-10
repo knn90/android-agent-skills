@@ -17,8 +17,7 @@ trade-offs, and over-engineering.
 
 Read `.claude/android-profile.md` — keys are referenced at point of use below.
 If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing →
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing →
 run `android-project-init`.
 
 <HARD-GATE>

@@ -10,8 +10,7 @@ argument-hint: "[problem to analyse step-by-step]"
 Skim `.claude/android-profile.md` for `architecture`, `state_type`, `navigation`,
 `networking`, `high_rigor_domains` so the patterns below map onto this app's vocabulary.
 If missing, skim the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it).
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`.
 
 ## When to Apply
 At least one of:

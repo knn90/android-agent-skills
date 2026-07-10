@@ -16,8 +16,7 @@ code or decided on the record. Output: a **hardened plan** + a decisions log.
 Read `.claude/android-profile.md`: `architecture`, `state_type`, `di`, `navigation`, `networking`,
 `localization`, `test_tags`, `feature_flags`, `verify_command`, `high_rigor_domains`,
 `plans_dir`, `rules_file`, ticket fields. If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing →
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing →
 run `android-project-init`.
 
 ## What this is (and is NOT)

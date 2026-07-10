@@ -15,8 +15,7 @@ Truth vs `assertEquals`, MockK, Turbine, `runTest`, doubles, parallelization, Ro
 ## Step 0 — Load profile
 Read `.claude/android-profile.md`: `verify_command` (how to run the suite), `test_roots`, `source_roots`.
 If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it).
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`.
 You will **run** tests here, not just write them — know the command before you start. If
 `verify_command` is unset, find the targeted run (e.g. `./gradlew :module:testDebugUnitTest --tests "com.app.CartTotalTest"`)
 so you can observe one test going red then green without the full suite.
@@ -40,8 +39,8 @@ behavior · adding edge-case handling · any change that could break existing be
  see it fail        see it pass           still green
 ```
 
-The runs are **not optional**. "Looks right" / "should pass" is not done — **execute the suite and read
-the output.**
+**Iron law: the runs are not optional** — "looks right" / "should pass" is not done; execute the suite
+and read the output.
 
 1. **RED — write one failing test, run it, watch it fail.** A test that passes the first time proves
    nothing (it isn't exercising new behavior, or the assert is wrong). Confirm it fails **for the

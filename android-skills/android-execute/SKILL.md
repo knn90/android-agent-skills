@@ -15,8 +15,7 @@ Read `.claude/android-profile.md`: `architecture`, `state_type`, `di`, `navigati
 `networking`, `localization`, `test_tags`, `feature_flags`, `crash_reporting`,
 `verify_command`, `high_rigor_domains`, `generated_paths`, `plans_dir`, `rules_file`,
 ticket fields. If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing →
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing →
 run `android-project-init`.
 
 ## When NOT to Use
@@ -104,7 +103,8 @@ your own edits *and* the dev agents' work.
 **Apply specialists (on by default).** When the code touches a domain with an installed `android-*-expert`
 skill — Compose → `android-compose-expert`, coroutines/Flow → `android-coroutines-expert`, tests →
 `android-testing-expert`, new/altered types, interfaces, services, or DI wiring → `android-solid-expert` —
-**load its `SKILL.md` and follow it** as you write. No profile entry needed; the
+**load its `SKILL.md` and follow it** as you write. (Canonical signal→specialist table:
+`android-code-review` Stage 2.0 — mirror any change here.) No profile entry needed; the
 profile's `specialists:` can restrict the set or `none` to disable. (For `--team`, each dev does this for its slice.)
 
 **Test-First (TDD) — always: solo and team, greenfield and existing.** **Load and follow

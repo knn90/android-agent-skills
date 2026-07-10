@@ -17,8 +17,7 @@ Read `.claude/android-profile.md`: `source_roots`, `plans_dir`, `high_rigor_doma
 `feature_flags`, `ticket_system`, `ticket_pattern`, `ticket_fetch`,
 `default_base_branch`, `pr_tool` (sub-skills load the rest themselves).
 If missing, read the main checkout's copy —
-`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`
-(the profile is usually gitignored, so worktrees don't inherit it). Still missing →
+`$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`. Still missing →
 run `android-project-init` first. If `source_roots` is empty (greenfield, nothing to
 scout/implement against) → tell the user to bootstrap the app first.
 

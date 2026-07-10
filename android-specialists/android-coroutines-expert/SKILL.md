@@ -1,6 +1,6 @@
 ---
 name: android-coroutines-expert
-description: "Expert Kotlin Coroutines & Flow reference — fires when work touches suspend, Dispatchers (Main/IO/Default), withContext, launch/async, coroutineScope/supervisorScope, viewModelScope/lifecycleScope, Job/cancellation, Flow/StateFlow/SharedFlow, collect/collectAsStateWithLifecycle, stateIn/shareIn, flowOn, Mutex, callbackFlow/suspendCancellableCoroutine, runTest, or structured-concurrency / main-safety review."
+description: "Expert Kotlin Coroutines & Flow reference. Fires when work touches coroutines/Flow (suspend, Dispatchers, launch/async, viewModelScope, StateFlow/SharedFlow, collect, Job/cancellation) or needs a structured-concurrency / main-safety review."
 ---
 
 # Kotlin Coroutines Expert
