@@ -87,7 +87,7 @@ Create `{reports_dir}` if absent.
 
 ## Findings
 ### Best Practices (current consensus)
-### Security / Privacy  (Keystore/EncryptedSharedPreferences, Network Security Config, biometrics, permissions — flag affected pinned versions)
+### Security / Privacy  (Android Keystore-backed encryption (Tink/DataStore), Network Security Config, biometrics, permissions — flag affected pinned versions)
 ### Performance Insights  (numbers > vibes)
 ### Comparative Analysis (if multiple options)
 | Option | Effort | Risk | Maintenance | Fit |

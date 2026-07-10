@@ -37,7 +37,7 @@ sources:
     path: .
     status: active
     primary: true              # ranked first; the authoritative source of truth
-    consulted_version: "kotlinx.coroutines 1.8+/1.9, Kotlin 2.x / K2 era"
+    consulted_version:         # record kotlinx.coroutines / Kotlin version on first consolidation
     license: "Kotlin Foundation / Apache-2.0 — reference; cite, write original guidance"
     note: >
       Authoritative for suspend semantics, structured concurrency (scope/Job tree), dispatchers,

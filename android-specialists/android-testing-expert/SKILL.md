@@ -12,9 +12,6 @@ description: "Expert Android testing guidance across the whole stack — JUnit4 
 [kotlinx-coroutines-test](https://developer.android.com/kotlin/coroutines/test), [Compose testing](https://developer.android.com/develop/ui/compose/testing),
 plus [MockK](https://mockk.io/) and [Truth](https://truth.dev/) docs — wins on any conflict.
 Community sources supply practical idioms and mistake patterns, not semantics.
-This skill owns **framework mechanics, doubles/DI, and migration**; it **pairs with `android-tdd`**,
-which owns the red→green→refactor discipline and Prove-It reproduction tests. Reach for `android-tdd`
-for *process*, this skill for *how the frameworks work*.
 Profile: `.claude/android-profile.md` — worktrees don't inherit it; fall back to
 `$(git rev-parse --path-format=absolute --git-common-dir)/../.claude/android-profile.md`.
 

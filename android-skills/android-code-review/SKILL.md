@@ -96,7 +96,7 @@ THREADING & CONCURRENCY (highest-value bugs — unless android-coroutines-expert
 - viewModelScope work is cancelled with the ViewModel; no leaked CoroutineScope / GlobalScope. Re-check state after every suspension point.
 - Flows collected with lifecycle awareness (repeatOnLifecycle / flowWithLifecycle), not in a naked launch that outlives the view.
 MEMORY & LIFETIME: Context/Activity leaks (long-lived refs, static holders); unregistered listeners/receivers/observers; coroutine leaks; ViewModel outliving its scope.
-SECURITY & PRIVACY: token leakage; EncryptedSharedPreferences / Android Keystore (not plain SharedPreferences) for secrets; cleartext traffic / missing Network Security Config; PII in logs/analytics/{crash_reporting}.
+SECURITY & PRIVACY: token leakage; Android Keystore-backed encryption (Tink/DataStore), never plain SharedPreferences, for secrets; cleartext traffic / missing Network Security Config; PII in logs/analytics/{crash_reporting}.
 MONEY (if a money/finance domain is configured in high_rigor_domains): BigDecimal not Double/Float; rounding; sign errors; currency parsing.
 ACCESSIBILITY: contentDescription / TalkBack labels, semantics {} order, font scaling (unless android-compose-expert handled it).
 HYGIENE: comments WHY-only; no dead/commented code; no back-compat shims for code this diff removed.

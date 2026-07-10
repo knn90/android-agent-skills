@@ -51,7 +51,3 @@ interface GenericApi {
 ```
 Benefits: each stub (or `coEvery { … } returns …`) returns one concrete shape · no branching in test setup ·
 the interface documents which operations a unit actually uses · type-safe per operation.
-
-Prefer a hand-written **fake** implementing the interface over a MockK mock when the collaborator has state or
-several call sites — it stays honest across refactors. Reach for `mockk`/`coEvery`/`verify` only for pure
-boundary stubs you don't own.

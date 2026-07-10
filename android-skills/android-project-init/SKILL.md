@@ -43,7 +43,7 @@ Read the codebase, fill the profile from evidence. **Verify every value — neve
 | `build_system` | `build.gradle.kts` present → Gradle-KTS · `build.gradle` (Groovy) → Gradle-Groovy |
 | `modules` | `include(...)` entries in `settings.gradle(.kts)`; `[:app]` if single-module |
 | `source_roots` / `test_roots` | dirs containing `src/main/**/*.kt` / `src/test` (unit/JVM) + `src/androidTest` (instrumented) |
-| `architecture` | grep: `@HiltViewModel`/`dagger.hilt`→Hilt DI stack · `androidx.compose`→Compose · `MVI`/`Reducer`/`intent(` patterns→MVI · `viewModelScope`+`StateFlow`→MVVM · multi-module `:core:`/`:feature:`→Clean-MultiModule |
+| `architecture` | grep: `MVI`/`Reducer`/`intent(`/single-`State`-in→MVI · `viewModelScope`+`StateFlow<UiState>`→MVVM · `UseCase`/`Interactor` layer→MVVM+UseCase · multi-module `:core:`/`:feature:`→Clean-MultiModule (DI + UI framework are separate fields below) |
 | `state_type` | grep for a shared `sealed interface UiState`/`sealed class …State`, MVI `Reducer`, `StateFlow<UiState>`, else none |
 | `di` | grep imports: `dagger.hilt`→Hilt · `org.koin`→Koin · `dagger.` (no hilt)→Dagger · else manual |
 | `navigation` | `NavHost`/`composable(`→Navigation-Compose · `nav_graph.xml`/`<navigation>`→Jetpack-Navigation-XML · `FragmentTransaction`→Fragment · custom |
