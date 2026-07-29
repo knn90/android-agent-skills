@@ -115,7 +115,7 @@ under `$(git rev-parse --path-format=absolute --git-common-dir)/..`. Then:
 
 Next: the android-* skills are now live for this project.
 - Find code            → android-scout
-- Plan a feature       → android-plan
+- Plan a feature       → wayfinder
 - Implement            → android-execute
-- Resolve end-to-end   → android-resolve <ticket | "description">  (scout→plan→execute→review→PR)
+- Resolve end-to-end   → android-resolve <ticket | "description">  (wayfinder→scout→execute→review→PR)
 ```

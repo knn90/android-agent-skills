@@ -29,7 +29,7 @@ user to run `android-project-init` first (greenfield repos have nothing to scout
 | Single file, known path | `Read` |
 | One symbol grep | `Grep` |
 | Trade-off discussion | `android-brainstorm` |
-| Full implementation plan | `android-plan` |
+| Full implementation plan | `wayfinder` |
 | Pattern outside the repo | `android-research` |
 
 ---

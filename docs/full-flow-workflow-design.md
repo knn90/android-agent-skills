@@ -1,8 +1,9 @@
 # Full-Flow Android Workflow — Design & Implementation Plan
 
-**Status:** v1 BUILT (2026-06-15) — decisions locked (see §6)
+**Status:** v1 BUILT (2026-06-15) — decisions locked (see §6). **Amended 2026-07-28 (§9):**
+planning delegated to `mattpocock-skills:wayfinder`; `android-plan` + `android-grill` removed.
 **Goal:** One entry point that takes a *ticket or free-form context* and drives it end-to-end:
-**scout → plan → implement (parallel team) → test → review → PR**, project-agnostic (profile-driven).
+**wayfinder (spec) → scout → implement (parallel team) → test → review → PR**, project-agnostic (profile-driven).
 **Decision taken:** generalized suite (`android-skills/`) + port a proven team-execution engine from a prior project-specific suite.
 
 ---
@@ -14,7 +15,7 @@ The generalized `android-skills/` suite already covers most of the flow. Every s
 | Stage | Existing skill | Produces |
 |---|---|---|
 | Scout | `android-scout` | a *map* (paths:line) — parallel Explore agents |
-| Plan | `android-plan` | `plan.md` + per-phase files under `plans_dir`, approval-aware |
+| Plan | `mattpocock-skills:wayfinder` | a spec (charted via decision tickets), approval-aware — *external, see §9* |
 | Implement | `android-execute` | code; plan-first → verify → review gates; **solo only today** |
 | Review | `android-code-review` | 3-stage adversarial review + verdict |
 | Research / ideate / reason | `android-research`, `android-brainstorm`, `android-sequential-thinking` | reports / reasoning |
@@ -52,9 +53,9 @@ Pipeline (each step delegates to an existing skill; orchestrator only sequences 
      TICKET-ID (matches ticket_pattern) → fetch via ticket_fetch
      free-form                           → use as task description
 2. INIT      → create branch {type}/{slug} off {base}; create plans_dir/{slug}/ + _status.md
-3. SCOUT     → android-scout  → writes scope.md
-4. PLAN      → android-plan   → writes plan.md   ── APPROVAL GATE (unless --skip-approval)
-5. IMPLEMENT → android-execute (plan-path) [--team N | --solo]  → code + verify + review
+3. PLAN      → wayfinder  → charts a spec (── APPROVAL GATE unless --skip-approval); to-tickets if sliced
+4. SCOUT     → android-scout  → writes scope.md
+5. IMPLEMENT → android-execute (spec/ticket path) [--team N | --solo]  → code + verify + review
 6. COMMIT    → /commit (granular; ticket id from branch)
 7. PR        → gh pr create --base {base}   (skip if --no-pr or no gh)
 8. TICKET    → best-effort transition (e.g. → CODE REVIEW) if ticket_system supports it
@@ -119,7 +120,7 @@ Task workspace reuses **`plans_dir/{slug}/`** (where `plan.md` already lands) fo
 
 Testing is woven through, not bolted on:
 
-1. **Plan** — `android-plan` already emits a *Testing Strategy* (unit / screenshot / UI + test tags).
+1. **Plan** — the `wayfinder` spec carries a *Testing Strategy* (unit / screenshot / UI + test tags).
 2. **Implement** — team mode dev-1 writes tests **first** (TDD); solo mode writes tests alongside.
 3. **Verify gate** — `verify_command` (build + test) must pass; output is read, not assumed. Unset → build-only, stated explicitly.
 4. **Review gate** — `android-code-review` checks test coverage of changed logic + transition holes.
@@ -136,9 +137,9 @@ TICKET-ID / context
       ▼
 android-resolve ──INIT──► branch + plans_dir/{slug}/_status.md
       │
-      ├─► android-scout ───────► scope.md
+      ├─► wayfinder ───────────► spec ──[APPROVAL GATE]── to-tickets (if sliced)
       │
-      ├─► android-plan ────────► plan.md ──[APPROVAL GATE]
+      ├─► android-scout ───────► scope.md
       │
       ├─► android-execute --team N ► .worktrees/{slug}/dev-1..N ──peer review──► integrate
       │        │                                                              │
@@ -151,7 +152,7 @@ android-resolve ──INIT──► branch + plans_dir/{slug}/_status.md
       └─► gh pr create ────────► PR url ──► (best-effort ticket transition)
 ```
 
-Artifacts under `plans_dir/{slug}/`: `_status.md`, `scope.md`, `plan.md`, `dev-1..N.md`, `peer-review.md`.
+Artifacts under `plans_dir/{slug}/`: `_status.md`, `scope.md`, spec/ticket pointers (the spec itself lives on the wayfinder tracker), `dev-1..N.md`, `peer-review.md`.
 
 ---
 
@@ -193,8 +194,28 @@ Phases 2 and 3 are the bulk. 1 is quick. 4–6 are hardening.
 After a self-review of `android-resolve` + `team-execution.md`:
 
 - **Dev worktree model** — native harness `isolation:"worktree"`; each dev commits to branch `{slug}/dev-N`; merge + peer-review happen by **branch name** (`git diff {base}...{slug}/dev-N`), so paths don't matter; the harness auto-cleans dev worktrees; only the integrate worktree is skill-managed.
-- **Plan inputs** — `android-plan` now emits a `complexity` frontmatter field (drives the auto dev-count) and an **Owner** column on the File Changes table (one owner per file → clean parallel merges).
+- **Plan inputs** — the `complexity` signal (drives the auto dev-count) and per-file **Owner** assignment now come from the `wayfinder` spec / `to-tickets` slices; `android-execute` estimates them itself when charting a micro-plan for a small change. *(Originally emitted by `android-plan` — see §9.)*
 - **Test split** — *revised to **vertical slices***: each dev owns code **and** tests for their slice (real local TDD, clean per-file ownership), no dedicated test dev. Independent edge-case coverage moved into peer review as a dedicated adversarial **edge-case / logic-gap reviewer agent** (Phase D) that drives missing tests *pre-merge*; the post-merge `android-code-review` adversarial pass stays the final gate. (Supersedes the earlier dedicated-test-dev choice and removes the cross-worktree TDD-compile friction.)
 - **Bug fixes** — (1) the team engine builds on the **task branch** (`BASE`), ff-merged back into it; (2) team-mode review uses `git diff {base}...{slug}/integrate`, not `--pending`; (3) devs must compile their worktree before reporting done (full test gate stays serialized at integrate); (4) TDD-compile-post-merge documented.
 
-**Known soft spot (for the dry-run):** the whole team engine is unexercised, and `android-plan` reliably populating `complexity` / `Owner` is LLM-dependent. The dry-run (§5 phase 6) is where these get validated.
+**Known soft spot (for the dry-run):** the whole team engine is unexercised, and the spec reliably carrying `complexity` / `Owner` is LLM-dependent. The dry-run (§5 phase 6) is where these get validated.
+
+---
+
+## 9. Amendment — wayfinder-driven planning (2026-07-28)
+
+Planning moved out of this suite. The bespoke `android-plan` (phased `plan.md`) and `android-grill`
+(decision-hardening) skills are **removed**; their role is now filled by
+[`mattpocock-skills:wayfinder`](https://github.com/mattpocock), which charts the work as a **spec**
+through decision tickets — driving its own sub-skills (prototyping, grilling, research, …)
+internally, then `/to-tickets` to slice the spec when the work spans more than one session.
+
+**New pipeline:** `input → init → wayfinder (spec) ──approval──► to-tickets (if needed) → android-scout → android-execute → commit → PR`.
+
+**Rationale / trade-offs:**
+- **Grilling doesn't disappear** — it moves *inside* wayfinder (which grills to name the destination and map the frontier). We drop the separate `android-grill` pass on a `plan.md`.
+- **`android-execute` decoupled from `plan.md`** — it now consumes a spec/tickets (or micro-plans a trivial change itself); `complexity` / `Owner` come from the spec/scope rather than a plan frontmatter field.
+- **External dependency + tracker** — wayfinder is a `mattpocock-skills` plugin and its ticket ops assume `/setup-matt-pocock-skills` has configured an issue tracker (defaults to local-markdown). Install it alongside this suite.
+- **Small-task escape hatch** — if wayfinder finds no fog (the change fits one session), it declines the map and `android-resolve` falls straight through to scout → execute.
+
+Sections §1–§8 above are the original v1 record; where they still name `android-plan` / `android-grill`, this section supersedes them.
