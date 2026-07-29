@@ -2,7 +2,6 @@
 name: android-code-review
 description: "Adversarial, multi-lens code review for an Android project (Kotlin / Jetpack Compose / Views); routes slices of the diff to installed android-* specialist skills. Use for PR, commit, pending-diff, or whole-codebase review."
 argument-hint: "[#PR | COMMIT | --pending | codebase]"
-model: best
 effort: xhigh
 ---
 
