@@ -1,7 +1,7 @@
 ---
 name: android-execute
 description: "ALWAYS activate before implementing any feature, plan, or fix in an Android project — except trivial single-file edits (< 20 lines). The only implementer in the suite."
-argument-hint: "[task | plan-path | TICKET-ID] [--fast | --auto | --no-test | --team N | --solo]"
+argument-hint: "[task | spec-or-plan-path | TICKET-ID] [--fast | --auto | --no-test | --team N | --solo]"
 ---
 
 # Execute — Android implementation
@@ -22,7 +22,7 @@ run `android-project-init`.
 | Case | Use instead |
 |---|---|
 | Need trade-off discussion | `android-brainstorm` |
-| Need a written plan first | `android-plan` |
+| Need a written plan/spec first | `wayfinder` |
 | Just find files | `android-scout` |
 | Library docs | `WebFetch` against the official URL |
 | Trivial fix (< 20 lines, single file) | Direct edit |
@@ -42,8 +42,8 @@ Exceptions:
 | "Too simple to plan" / "I'll plan as I go" | 30-sec plan prevents 30-min rework |
 
 ## Argument Parsing
-- **Plan path** (`{plans_dir}/.../plan.md`/`phase-*.md`) → execute plan mode.
-- **TICKET-ID** → `ticket_fetch` → matching plan, else `android-plan TICKET-ID`.
+- **Spec/plan path** (`{plans_dir}/.../*.md`/`phase-*.md`, or a wayfinder spec/ticket) → execute plan mode.
+- **TICKET-ID** → `ticket_fetch` → matching spec/plan, else micro-plan it (Phase 1).
 - **Free-form** → interactive.
 - **Flags:** `--fast` (scout→micro-plan→code), `--auto` (auto-approve gates, sparingly),
   `--no-test` (skip the final verify *run* only — you'll run it yourself; TDD still drives the code; record in report),
@@ -57,7 +57,7 @@ If no args, ask via `AskUserQuestion` (what to implement + mode).
 ## Process Flow
 ```
 1. Parse args
-2. Resolve plan (load OR android-plan creates OR --fast micro-plan)
+2. Resolve plan (load spec/plan OR micro-plan it)
 3. Plan Review Gate — user approval (skip only with --auto)
 4. Domain rigor flag — touches high_rigor_domains? → HIGH-RIGOR
 5. Implementation — test-first (TDD); solo (direct edits / one subagent) OR --team N (worktree dev team)
@@ -67,8 +67,9 @@ If no args, ask via `AskUserQuestion` (what to implement + mode).
 ```
 
 ## Phase 1 — Load context
-Resolve the plan (plan path → Read; ticket → fetch + find/create plan; free-form → trivial
-inline plan or `android-plan`). Load `rules_file` + relevant `docs_root`.
+Resolve the plan (spec/plan path → Read; ticket → fetch + find spec, else micro-plan; free-form →
+trivial inline micro-plan). A spec/ticket is an *input* you plan **from** — read it, then form your
+own working plan; they are not the same artifact. Load `rules_file` + relevant `docs_root`.
 
 **Domain rigor flag:** if the task touches any `high_rigor_domains` → mark **HIGH-RIGOR**:
 - adversarial review **mandatory** at the review gate
@@ -78,7 +79,7 @@ inline plan or `android-plan`). Load `rules_file` + relevant `docs_root`.
 
 ## Phase 2 — Plan Review Gate
 User approval required (skipped only with `--auto`, or when `android-resolve` drives the run —
-its approval gate on the hardened plan already satisfies this one). Present: files to change (path:line),
+its approval gate on the wayfinder spec already satisfies this one). Present: files to change (path:line),
 phases, test strategy (UI testTags?), feature flag, HIGH-RIGOR flag.
 `AskUserQuestion`: Approved → proceed · Revise → regenerate · Abort → stop.
 **Do NOT start implementing without approval.**
@@ -94,7 +95,7 @@ phases, test strategy (UI testTags?), feature flag, HIGH-RIGOR flag.
 | large / parallelizable, or `--team N` | **team** | N dev agents in isolated worktrees + peer review + merge (see below) |
 
 **Auto dev count** (when none of `--team N` / `--devs N` / `--solo` is given): read the plan's
-`complexity` field (set by android-plan) → **LOW = solo · MEDIUM = 2 · HIGH = 3**. `--solo` forces 1; an explicit
+`complexity` field (from the spec's scope, else your micro-plan estimate) → **LOW = solo · MEDIUM = 2 · HIGH = 3**. `--solo` forces 1; an explicit
 `--team N` / `--devs N` always wins. For team runs, **load and follow
 `references/team-execution.md`** (spawn → context → build → peer review → merge → validate);
 it reuses the same profile + discipline below. The discipline applies to **every** path —
@@ -156,9 +157,8 @@ review the merged diff instead — `android-code-review` on `git diff {BASE}...{
 - Update `plan.md` frontmatter `status: completed`; tick remaining checkboxes.
 - Update docs if implementation changed architecture/conventions (light edits OK; rewrites
   need approval).
-- **Plan lifecycle:** the plan stays on the branch during dev. If your PR flow removes it
-  before opening the PR, that's the PR step's job — not here. Mention `android-plan archive`
-  if worth keeping as a decision record.
+- **Plan lifecycle:** the plan/spec stays on the branch during dev. If your PR flow removes it
+  before opening the PR, that's the PR step's job — not here.
 - **Final commit:** most work is already committed via granular `/commit`. If the tree is
   dirty (checkbox/status/doc tweaks), `/commit` once more. **Do NOT push** without explicit
   instruction.

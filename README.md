@@ -8,15 +8,18 @@ every project-specific fact lives in the profile and is read at runtime.
 ```
 android-project-init ──→ .claude/android-profile.md        # run ONCE per project
 
-android-resolve  ── one command: ticket/context → scout → plan → grill → execute → review → PR
+android-resolve  ── one command: ticket/context → wayfinder → scout → execute → review → PR
       │
       ├─ android-scout ────────┐
       ├─ android-research ──────┤
-      ├─ android-brainstorm ────┼─→ android-plan ─→ android-grill ─→ android-execute ─→ android-code-review
+      ├─ android-brainstorm ────┼─→ wayfinder ─→ android-execute ─→ android-code-review
       └─ android-sequential-thinking  (reasoning aid; plugs in anywhere)
                                           │ apply           │ route
                                           └─── android-specialists ───┘
                           (Compose · Coroutines · Testing · TDD · SOLID — Google-primary)
+
+Planning is delegated to mattpocock-skills:wayfinder (charts a spec via its own sub-skills),
+then /to-tickets slices it when needed — install mattpocock-skills alongside this suite.
 ```
 
 ## Setup (once per project)
@@ -67,14 +70,15 @@ android-resolve ABC-123 --solo --no-pr    # single agent, stop before the PR
 `android-resolve` is the front door. It runs:
 
 ```
-fetch ticket/context → create branch → android-scout → android-plan → android-grill (harden) ──(you approve)──►
-    android-execute (TDD; solo or --team N) → android-code-review → /commit → open PR
+fetch ticket/context → create branch → wayfinder (spec) ──(you approve)──► to-tickets (if needed)
+    → android-scout → android-execute (TDD; solo or --team N) → android-code-review → /commit → open PR
 ```
 
-`android-grill` interrogates the plan's open decisions one at a time (each with a recommended answer,
-codebase checked first) and folds your answers back in — so you approve a **hardened** plan, not a
-plan full of unstated assumptions. It auto-skips when the plan is already unambiguous.
-You approve the plan **before** any code is written, and nothing is pushed without you.
+`wayfinder` charts the work as a spec — naming the destination, then resolving its open decisions
+one at a time (driving its own sub-skills — prototyping, grilling, research, … — as each demands)
+so you approve a **hardened** spec, not one full of unstated assumptions. For a small, clear change
+it declines the map and the flow falls straight through to scout → execute.
+You approve the spec **before** any code is written, and nothing is pushed without you.
 
 ### Or à la carte
 
@@ -84,8 +88,7 @@ Every skill also stands alone:
 android-scout OrderListViewModel            # where does this live?
 android-research "offline sync options"     # sourced technical research
 android-brainstorm "offline support"        # brutal trade-off analysis → decision report
-android-plan ABC-123                         # phased plan (you approve)
-android-grill <plan-dir>                     # stress-test a plan: grill open decisions, harden it
+wayfinder "offline support"                  # chart the spec (you approve); a mattpocock-skills skill
 android-execute <plan-path> --team 2         # implement (TDD; parallel worktree team)
 android-code-review #42                      # adversarial, multi-lens review of a PR
 ```
@@ -97,14 +100,13 @@ android-code-review #42                      # adversarial, multi-lens review of
 | Skill | Role |
 |---|---|
 | `android-project-init` | One-time: writes `.claude/android-profile.md` (detect existing app / set greenfield conventions). |
-| `android-resolve` | **The front door.** ticket/context → scout → plan → execute → review → PR. Orchestrates; never implements directly. |
+| `android-resolve` | **The front door.** ticket/context → wayfinder → scout → execute → review → PR. Orchestrates; never implements directly. |
 | `android-scout` | Fast, token-efficient parallel code discovery — returns a *map*, not analysis. |
 | `android-research` | Sourced technical research grounded in the codebase. |
 | `android-brainstorm` | Brutally honest trade-off analysis → decision report. |
 | `android-sequential-thinking` | Step-by-step reasoning aid; plugs in anywhere. |
-| `android-plan` | Phased implementation plan, with an approval gate. |
-| `android-grill` | Stress-tests the plan **before** approval: interrogates open decisions one at a time (recommended answer each, codebase checked first), folds answers back into `plan.md`. Auto-skips when the plan is unambiguous. |
-| `android-execute` | **The only implementer.** plan → code → verify → review. **TDD always**; solo, or `--team N` (parallel worktree devs + peer review + a dedicated edge-case reviewer + merge). |
+| `wayfinder` *(mattpocock-skills)* | Planning front-end: charts the work as a spec through decision tickets, driving its own sub-skills (prototyping, grilling, research, …); `/to-tickets` then slices the spec. Approval gate on the spec. Not part of this suite — install `mattpocock-skills` alongside it. |
+| `android-execute` | **The only implementer.** spec → code → verify → review. **TDD always**; solo, or `--team N` (parallel worktree devs + peer review + a dedicated edge-case reviewer + merge). |
 | `android-code-review` | Multi-lens adversarial review; **routes change-typed slices to the specialists**; precision-over-recall findings. |
 
 **Specialists — `android-specialists/` (optional add-ons; auto-used once installed)**
@@ -143,7 +145,7 @@ android-agent-skills/
 │   ├── plugin.json              #   bundles android-skills/ + android-specialists/ as the plugin
 │   └── marketplace.json         #   self-marketplace listing the plugin
 ├── README.md
-├── android-skills/              # core workflow (10 skills)       — shipped by the plugin
+├── android-skills/              # core workflow (8 skills)        — shipped by the plugin
 │   └── android-project-init/android-profile.template.md   # copy to <project>/.claude/android-profile.md
 ├── android-specialists/         # optional specialist reviewers (5)   — shipped by the plugin
 ├── android-skill-consolidate/   # repo-maintenance (rebuilds skills from sources) — NOT shipped
@@ -153,7 +155,7 @@ android-agent-skills/
 ## Core principles (every skill)
 
 - **Profile-driven** — read `.claude/android-profile.md` first; never hardcode project facts.
-- **Plan-first** — no implementation before an approved plan (hard gate in `android-execute`).
+- **Plan-first** — no implementation before an approved spec/plan (hard gate in `android-execute`).
 - **TDD always** — `android-execute` writes a failing test before the code.
 - **Verify before claiming** — run `verify_command` (Gradle), read the output, *then* claim done (empty → build-only, stated).
 - **Google / official Android docs = source of truth** — specialists and review defer to developer.android.com over community sources.

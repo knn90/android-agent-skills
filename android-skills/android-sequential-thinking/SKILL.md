@@ -27,7 +27,7 @@ At least one of:
 |---|---|
 | Simple one-step answer | Just answer |
 | Brutal trade-off comparison | `android-brainstorm` |
-| Plan + phases | `android-plan` |
+| Plan + phases | `wayfinder` |
 | Bug needs log/CI investigation | Direct `Bash`/`Read` |
 
 ---
